@@ -1,0 +1,138 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.theappbusiness.androidtest"
+
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+
+    /////////////////////////////////////////////////////
+    ///              RELEASE LIBRARIES                ///
+    /////////////////////////////////////////////////////
+
+    //Android support libraries
+    compile deps.supportCompat
+    compile deps.supportDesign
+    compile deps.supportCardView
+    compile deps.supportPercent
+    compile deps.supportCustomTabs
+    compile deps.supportAnnotations
+    compile deps.supportV4
+    compile deps.constraintLayout
+    //Architecture components
+    compile deps.archRuntime
+    compile deps.archExtensions
+    annotationProcessor deps.archCompiler
+    //Room
+    compile deps.roomRuntime
+    annotationProcessor deps.roomCompiler
+    compile deps.roomRxJava
+    //Timber
+    compile deps.timber
+    //Gson
+    compile deps.gson
+    //Dagger 2
+    compile deps.dagger
+    annotationProcessor deps.daggerCompiler
+    //RxJava
+    compile deps.rxandroid
+    compile deps.rxjava
+    //Glide
+    compile deps.glide
+    //OkHttp
+    compile deps.okhttp
+    compile deps.okhttpLogging
+    //Retrofit
+    compile deps.retrofit
+    compile deps.retrofitGson
+    compile deps.retroftiRxJava
+    //Auto value
+    provided deps.autoValue
+    annotationProcessor deps.autoValueCompiler
+    //Auto value parcels
+    compile deps.autoValueParcel
+    annotationProcessor deps.autoValueParcelCompiler
+    //Auto value Gson
+    provided(deps.autoValueGson) {
+        exclude group: 'com.google.gson', module: 'gson'
+    }
+    annotationProcessor deps.autoValueGson
+
+    //Calligraphy
+    compile deps.calligraphy
+    //JodaTime
+    compile deps.jodaTime
+
+    /////////////////////////////////////////////////////
+    ///                DEBUG LIBRARIES                ///
+    /////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////
+    ///            INSTRUMENTATION TESTS              ///
+    /////////////////////////////////////////////////////
+
+    // Espresso UI Testing dependencies
+    androidTestCompile deps.espressoCore
+    androidTestCompile deps.espressoIntents
+    androidTestCompile deps.espressoContrib
+    // Android Testing Support Library's runner, rules and assertion
+    androidTestCompile deps.testRules
+    androidTestCompile deps.testRunner
+    androidTestCompile deps.assertjAndroid
+    // Idling Resources
+    debugCompile deps.espressoIdlingResource
+    debugCompile deps.espressoIdlingConcurrent
+    debugCompile deps.espressoIdlingNet
+
+    /////////////////////////////////////////////////////
+    ///                  UNIT TESTS                   ///
+    /////////////////////////////////////////////////////
+
+    // Dependencies for local unit tests
+    testCompile deps.junit
+    testCompile deps.mockito
+    testCompile deps.assertJ
+    testCompile deps.assertjAndroid
+    testCompile deps.dagger
+    testCompile deps.daggerCompiler
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
+    resolutionStrategy.force "com.android.support:support-v4:$supportLibraryVersion"
+    resolutionStrategy.force "com.android.support:appcompat-v7:$supportLibraryVersion"
+    resolutionStrategy.force "com.android.support:design:$supportLibraryVersion"
+    resolutionStrategy.force "com.android.support:transition:$supportLibraryVersion"
+    resolutionStrategy.force "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    resolutionStrategy.force "com.google.guava:guava:20.0"
+    resolutionStrategy.force "com.google.gson:gson:2.8.1"
+    resolutionStrategy.force "android.arch.lifecycle:common:$archComponentsVersion"
+    resolutionStrategy.force "android.arch.lifecycle:runtime:$archComponentsVersion"
+    resolutionStrategy.force "android.arch.lifecycle:extensions:$archComponentsVersion"
+    resolutionStrategy.force "android.arch.lifecycle:compiler:$archComponentsVersion"
+}
